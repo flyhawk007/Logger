@@ -1,0 +1,46 @@
+下面是怎么使用SimpleLogger类库。
+
+[1] 把SimpleLogger.h和SimpleLogger.m加到你的项目中 
+[2] 调用[[SimpleLogger getLogger]setLogLevelSetting:SOME_LEGEL];（可选的，默认是SLLE_MAJOR) 
+[3] 最后调用[[SimpleLogger getLogger]release] 
+[4] 常用方法：
+
+ENTER(@"method name");  
+  
+INFO(@"The count of array is %d", [array count]);  
+  
+DEBUG(@"The person’s name is %@", person.name);  
+  
+ERROR(@"Impossible get into this branch");  
+  
+RETURN(rst, @"%d", rst); //rst就是返回值  
+  
+LOG(SLL_DETAILED, @"This log is very detailed with value %d", value);  
+  
+[[SimpleLogger getLogger]setLogLevelSetting:SLLS_MINOR]; //设置日志级别
+
+//====================================================================================
+#import <Foundation/Foundation.h>  
+#import "SimpleLogger.h"  
+  
+int testLogger()  
+{  
+    ENTER(@"testLogger()");  
+    int rst = 10;  
+    RETURN(-rst, @"%d", -rst);  
+}  
+  
+int main (int argc, const char * argv[]) {  
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];  
+    [SimpleLogger getLogger];  
+      
+    //insert code here  
+    int i = 10;  
+    INFO(@"i is %d", i);  
+    i = -100;  
+    INFO(@"i is %d", i);         
+    testLogger();  
+    [pool drain];  
+    [[SimpleLogger getLogger]release];  
+    return 0;   
+}
